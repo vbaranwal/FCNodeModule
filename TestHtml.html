@@ -1,0 +1,126 @@
+<html>
+	<head>
+		<title>Test Page for fcevents </title>
+		<script src="node_modules/fcevents.js"></script>
+		<script>
+			var eventEmitter = new fcevents.EventEmitter();
+			
+			// Test "on" method
+			console.log();
+			console.log('Test "on" method');
+			console.log('--------------------------------------------------');
+			
+			var testEventListener1 = function testEventListener1() {
+			  console.log('testEventListener1');
+			};
+			eventEmitter.on('testEvent1', testEventListener1);
+			eventEmitter.emit('testEvent1');
+			
+			console.log();
+			
+			
+			// Test "addListener" method
+			console.log();
+			console.log('Test "addListener" method');
+			console.log('--------------------------------------------------');
+			
+			var testEventListener2 = function testEventListener2() {
+			  console.log('testEventListener2');
+			};
+			eventEmitter.addListener('testEvent2', testEventListener2);
+			eventEmitter.emit('testEvent2');
+			
+			console.log();
+			
+			
+			// Test "once" method
+			console.log();
+			console.log('Test "once" method');
+			console.log('--------------------------------------------------');
+			
+			var testEventListener3 = function testEventListener3() {
+			  console.log('testEventListener3');
+			};
+			eventEmitter.once('testEvent3', testEventListener3);
+			var count = fcevents.EventEmitter.listenerCount(eventEmitter, 'testEvent3');
+			console.log('Count for testEvent3 BEFORE emit: ' + count);
+			eventEmitter.emit('testEvent3');
+			var count = fcevents.EventEmitter.listenerCount(eventEmitter, 'testEvent3');
+			console.log('Count for testEvent3 AFTER emit: ' + count);
+			
+			console.log();
+			
+			
+			// Test "setMaxListeners" method
+			console.log();
+			console.log('Test "setMaxListeners" method');
+			console.log('--------------------------------------------------');
+			
+			console.log('Setting max listeners to 1');
+			eventEmitter.setMaxListeners(1);
+			var testEventListener4 = function testEventListener4() {
+			  console.log('testEventListener4');
+			};
+			eventEmitter.on('testEvent1', testEventListener4);
+			eventEmitter.emit('testEvent1');
+			
+			console.log('Setting max listeners to 0');
+			eventEmitter.setMaxListeners(0);
+			eventEmitter.on('testEvent1', testEventListener4);
+			eventEmitter.emit('testEvent1');
+			
+			console.log();
+			
+			
+			// Test "listeners" method
+			console.log();
+			console.log('Test "listeners" method');
+			console.log('--------------------------------------------------');
+			
+			var listeners = eventEmitter.listeners('testEvent2');
+			console.log(listeners);
+			
+			console.log();
+			
+			
+			// Test "removeListener" method
+			console.log();
+			console.log('Test "removeListener" method');
+			console.log('--------------------------------------------------');
+			
+			var listeners = eventEmitter.listeners('testEvent2');
+			console.log('Listerners BEFORE remove');
+			console.log(listeners);
+			
+			eventEmitter.removeListener('testEvent2', testEventListener2);
+			
+			var listeners = eventEmitter.listeners('testEvent2');
+			console.log('Listerners AFTER remove');
+			console.log(listeners);
+			
+			console.log();
+			
+			
+			// Test "removeAllListeners" method
+			console.log();
+			console.log('Test "removeAllListeners" method');
+			console.log('--------------------------------------------------');
+			
+			var listeners = eventEmitter.listeners('testEvent1');
+			console.log('Listerners BEFORE remove all');
+			console.log(listeners);
+			
+			eventEmitter.removeAllListeners('testEvent1');
+			
+			var listeners = eventEmitter.listeners('testEvent1');
+			console.log('Listerners AFTER remove all');
+			console.log(listeners);
+			
+			console.log();
+		</script>
+	</head>
+	<body>
+		<h1>Test Page for fcevents</h1>		
+		<h3>Open developer tools and check the console for logs</h3>
+	</body>
+</html>
